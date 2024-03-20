@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timebox Timer for Productivity</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Title -->
+    <!-- <p>There's nothing quite like a ticking timer to help motivate you to focus on what you're doing. Set a dedicated time frame to work on your tasks, and avoid distractions. This timer will stay in the front of your screen as a powerful reminder.</p> -->
+    <div class="content-wrapper">
+        <!-- Container -->
+        <div class="container">
+            <!-- Input -->
+            <div class="input-container" id="input-container">
+                <h1>Set A Timer To Focus</h1>
+                <form action="" class="form" id="countdownForm">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="What are you getting done?">
+                    <p class="label">How long do you want to focus?</p>
+                    <div class="time-container" id="time-container">
+                        <input class="input-timer" type="button" id="time-selector-30" value="30 min">
+                        <input class="input-timer" type="button" id="time-selector-60" value="60 min">
+                        <input class="input-timer" type="button" id="time-selector-90" value="90 min">
+                    </div>
+                    <h2 id="timer">00:00</h2>
+                    <button type="submit">Start</button>
+                </form>
+            </div>
+            <!-- Countdown -->
+            <div class="countdown" id="countdown" hidden>
+                <h1>Keep your focus on</h1>
+                <h1 id="countdown-title"></h1>
+                <ul>
+                    <li><span></span>Minutes</li>
+                    <li><span></span>Seconds</li>
+                </ul>
+                <button id="countdown-button">Reset</button>
+            </div>
+            <!-- Complete -->
+            <div class="complete" id="complete" hidden>
+                <h1 class="complete-title">Well done!</h1>
+                <h1 id="complete-info"></h1>
+                <button id="complete-button">Schedule next Task</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer" id="footer">
+        <a href="https://twitter.com/kiliandreher" target="_blank">
+            <span>Made with </span><i class="fas fa-heart"></i>
+            <span> by Kilian</span>
+        </a>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
