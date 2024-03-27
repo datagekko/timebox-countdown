@@ -23,10 +23,11 @@ let savedCountdown;
 const second = 1000;
 
 // // Populate Countdown / Complete UI
-function updateDOM(countdownTime, endTime = new Date(savedCountdown.endTime)) {
+function updateDOM() {
 
     countdownActive = setInterval(() => {
         const now = new Date();
+        const endTime = new Date(savedCountdown.endTime);
         const duration = (endTime - now) / 1000;
 
         const minutes = Math.floor(duration / 60);
@@ -42,15 +43,8 @@ function updateDOM(countdownTime, endTime = new Date(savedCountdown.endTime)) {
             clearInterval(countdownActive);
             completeElInfo.textContent = `You have completed ${countdownTitle}.`;
             completeEl.hidden = false;
-
             // Send a notification if permission was granted
-            if (Notification.permission === "granted") {
-                new Notification("Countdown Finished", {
-                    body: `Your countdown for ${countdownTitle} is complete!`,
-                });
-            } else {
-                console.log("Notification permission not granted.");
-            }
+            sendNotification();
         } else {
             // Else, show the countdown in Progress.
             countDownElTitle.textContent = `${countdownTitle}`;
@@ -61,6 +55,23 @@ function updateDOM(countdownTime, endTime = new Date(savedCountdown.endTime)) {
         }
     }, second);
 }
+
+// Send Notification
+function sendNotification() {
+    if (Notification.permission === "granted") {
+        new Notification("Countdown Finished", {
+            body: `Your countdown for ${countdownTitle} is complete!`,
+        });
+    } else if (Notification.permission === "default") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                new Notification("Countdown Finished", {
+                    body: `Your countdown for ${countdownTitle} is complete!`,
+                });
+            }
+        });
+    }
+} 
 
 // Take Value from Buttons
 function updateTimer(event) {
@@ -77,15 +88,15 @@ function updateTimer(event) {
 }
 
 // Take Value from Form Input
-function updateCountdown(event, countdownTime) {
-    askNotificationPermission()
+function updateCountdown(event) {
     event.preventDefault();
+    askNotificationPermission();
     if (countdownTitle==='') {
         countdownTitle = event.srcElement[0].value;
     } else {
         countdownTitle = event.target.elements["title"].value;
     }
-    countdownTime = selectedTime.textContent;
+    const countdownTime = selectedTime.textContent;
 
     const currentTime = new Date();
     const endTime = new Date(currentTime.getTime() + parseCountdownTime(countdownTime) * 1000);
@@ -101,7 +112,7 @@ function updateCountdown(event, countdownTime) {
     if (countdownTime === '') {
         alert('Please select a time for the countdown.');
     } else {
-        updateDOM(countdownTime, endTime);
+        updateDOM();
     }
 }
 
@@ -121,18 +132,8 @@ function askNotificationPermission() {
     } else if (Notification.permission === "default") {
         // Ask the user for permission
         Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                console.log("Notification permission granted.");
-                // You can optionally show a demo notification here
-                // new Notification("Thank you for enabling notifications!");
-            } else if (permission === "denied") {
-                console.log("Notification permission denied.");
-            }
+            console.log(permission === "granted" ? "Notification permission granted." : "Notification permission denied.");
         });
-    } else if (Notification.permission === "granted") {
-        console.log("Notification permission was already granted.");
-    } else {
-        console.log("Notification permission denied.");
     }
 }
 
@@ -158,7 +159,7 @@ function restorePreviousCountdown() {
         savedCountdown = JSON.parse(localStorage.getItem('countdown'));
         countdownTitle = savedCountdown.title;
         countdownTime = savedCountdown.time;
-        updateDOM(countdownTime);
+        updateDOM();
     }
 }
 
