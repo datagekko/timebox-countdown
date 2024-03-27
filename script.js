@@ -59,14 +59,14 @@ function updateDOM() {
 // Send Notification
 function sendNotification() {
     if (Notification.permission === "granted") {
-        new Notification("Countdown Finished", {
-            body: `Your countdown for ${countdownTitle} is complete!`,
+        new Notification("Timer Finished", {
+            body: `Your timer for ${countdownTitle} is complete!`,
         });
     } else if (Notification.permission === "default") {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                new Notification("Countdown Finished", {
-                    body: `Your countdown for ${countdownTitle} is complete!`,
+                new Notification("Timer Finished", {
+                    body: `Your timer for ${countdownTitle} is complete!`,
                 });
             }
         });
