@@ -39,6 +39,7 @@ body {
 
 .input-container {
   top: 20px;
+  min-width: 300px;
 }
 
 .timer-container {
