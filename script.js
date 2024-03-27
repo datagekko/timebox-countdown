@@ -80,7 +80,7 @@ function updateTimer(event) {
     event.preventDefault();
     let countdownTime;
     if (event.target.id === 'time-selector-30') {
-        countdownTime = '00:30';
+        countdownTime = '30:00';
     } else if (event.target.id === 'time-selector-60') {
         countdownTime = '60:00';
     } else if (event.target.id === 'time-selector-90') {
